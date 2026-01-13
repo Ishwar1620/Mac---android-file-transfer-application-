@@ -115,9 +115,6 @@ file/
 - **Real-time Updates**: WebSockets
 - **Styling**: Modern CSS with dark theme and animations
 
-## License
-
-MIT License - Feel free to use and modify as needed.
 
 ## Contributing
 
