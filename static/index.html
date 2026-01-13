@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android File Transfer</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <svg class="app-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Android File Transfer
+                </h1>
+                <div class="device-selector">
+                    <label for="device-select">Device:</label>
+                    <select id="device-select" class="device-dropdown">
+                        <option value="">No devices connected</option>
+                    </select>
+                    <div class="connection-status" id="connection-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Connecting...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Mac Explorer -->
+            <div class="explorer-panel mac-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
+                        </svg>
+                        <span>Mac Files</span>
+                    </div>
+                    <div class="breadcrumb" id="mac-breadcrumb">
+                        <span class="breadcrumb-item">~</span>
+                    </div>
+                </div>
+                <div class="file-list" id="mac-files" data-drop-target="mac">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading files...</p>
+                    </div>
+                </div>
+                <div class="transfer-actions">
+                    <button class="transfer-btn" id="transfer-to-android" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                        Transfer to Android (<span id="mac-selection-count">0</span>)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Transfer Indicator -->
+            <div class="transfer-indicator" id="transfer-indicator">
+                <svg class="transfer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </div>
+
+            <!-- Android Explorer -->
+            <div class="explorer-panel android-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                        <span>Android Files</span>
+                    </div>
+                    <div class="breadcrumb" id="android-breadcrumb">
+                        <span class="breadcrumb-item">/sdcard/Download</span>
+                    </div>
+                </div>
+                <div class="file-list" id="android-files" data-drop-target="android">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                        <p>No device selected</p>
+                        <span>Connect an Android device to get started</span>
+                    </div>
+                </div>
+                <div class="transfer-actions">
+                    <button class="transfer-btn" id="transfer-to-mac" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 5 5 12 12 19"></polyline>
+                        </svg>
+                        Transfer to Mac (<span id="android-selection-count">0</span>)
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Transfer Progress Modal -->
+        <div class="progress-modal" id="progress-modal">
+            <div class="progress-content">
+                <div class="progress-header">
+                    <h3>Transferring File</h3>
+                    <button class="close-btn" id="close-progress">×</button>
+                </div>
+                <div class="progress-body">
+                    <div class="file-transfer-info">
+                        <svg class="transfer-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <div class="transfer-details">
+                            <div class="transfer-filename" id="transfer-filename">example.mp4</div>
+                            <div class="transfer-direction" id="transfer-direction">Mac → Android</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">0%</div>
+                    </div>
+                    <div class="transfer-status" id="transfer-status">Preparing transfer...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toast-container"></div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>
