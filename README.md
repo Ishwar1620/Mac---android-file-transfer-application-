@@ -1,12 +1,11 @@
 # Android File Transfer Application
 
-A modern web-based application for transferring files between Mac and Android devices with a beautiful split-view interface.
+A  web-based FASTAPI application for transferring files between Mac and Android devices with split-view interface.
 
 ## Features
 
 - 🔄 **Bidirectional File Transfer**: Transfer files between Mac and Android seamlessly
 - 📱 **Real-time Device Detection**: Automatically detects connected Android devices
-- 🎨 **Modern UI**: Beautiful dark-themed split-view interface with smooth animations
 - 🖱️ **Drag & Drop**: Intuitive drag-and-drop file transfer
 - 🔌 **WebSocket Support**: Real-time device status updates
 - 📂 **File Browser**: Navigate both Mac and Android file systems easily
